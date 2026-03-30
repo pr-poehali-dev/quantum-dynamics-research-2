@@ -18,8 +18,8 @@ export default {
 			}
 		},
 		fontFamily: {
-			sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
-			mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+			sans: ['Playfair Display', 'Georgia', 'Times New Roman', 'serif'],
+			mono: ['Cormorant Garamond', 'Georgia', 'serif'],
 		},
 		extend: {
 			colors: {
