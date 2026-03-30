@@ -148,26 +148,87 @@ export default function Index() {
       <CustomCursor />
       <GrainOverlay />
 
-      {/* Video background */}
+      {/* Animated flame background */}
       <div className={`fixed inset-0 z-0 transition-opacity duration-1000 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
-        <iframe
-          src="https://www.youtube.com/embed/LMlUlFNW3nk?autoplay=1&mute=1&loop=1&playlist=LMlUlFNW3nk&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&fs=0&iv_load_policy=3"
-          allow="autoplay; encrypted-media"
-          className="pointer-events-none absolute"
-          style={{
-            top: "50%",
-            left: "50%",
-            width: "177.78vh",
-            minWidth: "100%",
-            height: "56.25vw",
-            minHeight: "100%",
-            transform: "translate(-50%, -50%)",
-            border: "none",
-          }}
-          title="background"
-        />
-        <div className="absolute inset-0 bg-black/55" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
+        <div className="absolute inset-0 bg-[#080810]" />
+
+        {/* Stars */}
+        <div className="absolute inset-0 overflow-hidden">
+          {Array.from({ length: 80 }).map((_, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full bg-white"
+              style={{
+                width: `${Math.random() * 2 + 1}px`,
+                height: `${Math.random() * 2 + 1}px`,
+                top: `${Math.random() * 70}%`,
+                left: `${Math.random() * 100}%`,
+                opacity: Math.random() * 0.6 + 0.2,
+                animation: `starTwinkle ${Math.random() * 3 + 2}s ease-in-out infinite`,
+                animationDelay: `${Math.random() * 4}s`,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Eternal flame */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2" style={{ width: 180, height: 340 }}>
+          {/* Pedestal */}
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-36 h-10 rounded-t-sm"
+            style={{ background: "linear-gradient(to top, #1a1a2e, #2a2a4e)" }} />
+
+          {/* Flame layers */}
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2" style={{ width: 90, height: 220 }}>
+            {/* Outer flame */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 origin-bottom"
+              style={{
+                width: 80, height: 180,
+                background: "radial-gradient(ellipse at 50% 100%, #8B0000 0%, #cc2200 30%, #ff4400 55%, transparent 80%)",
+                borderRadius: "50% 50% 20% 20%",
+                animation: "flameOuter 2.5s ease-in-out infinite",
+                filter: "blur(6px)",
+              }} />
+            {/* Mid flame */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 origin-bottom"
+              style={{
+                width: 55, height: 140,
+                background: "radial-gradient(ellipse at 50% 100%, #cc3300 0%, #ff6600 40%, #ffaa00 70%, transparent 90%)",
+                borderRadius: "50% 50% 20% 20%",
+                animation: "flameMid 1.8s ease-in-out infinite",
+                animationDelay: "0.3s",
+                filter: "blur(3px)",
+              }} />
+            {/* Inner flame */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 origin-bottom"
+              style={{
+                width: 30, height: 90,
+                background: "radial-gradient(ellipse at 50% 100%, #ffcc00 0%, #ffee88 50%, transparent 85%)",
+                borderRadius: "50% 50% 20% 20%",
+                animation: "flameInner 1.3s ease-in-out infinite",
+                animationDelay: "0.1s",
+                filter: "blur(2px)",
+              }} />
+            {/* Core */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 origin-bottom"
+              style={{
+                width: 14, height: 50,
+                background: "radial-gradient(ellipse at 50% 100%, #ffffff 0%, #ffffcc 60%, transparent 90%)",
+                borderRadius: "50% 50% 20% 20%",
+                animation: "flameCore 1s ease-in-out infinite",
+                filter: "blur(1px)",
+              }} />
+          </div>
+
+          {/* Glow on ground */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2"
+            style={{
+              width: 200, height: 60,
+              background: "radial-gradient(ellipse at 50% 100%, rgba(255,80,0,0.35) 0%, transparent 70%)",
+              animation: "glowPulse 2s ease-in-out infinite",
+            }} />
+        </div>
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/50" />
       </div>
 
       <nav
@@ -265,6 +326,35 @@ export default function Index() {
 
       <style>{`
         div::-webkit-scrollbar { display: none; }
+
+        @keyframes flameOuter {
+          0%, 100% { transform: translateX(-50%) scaleX(1) scaleY(1) rotate(-1deg); }
+          25% { transform: translateX(-50%) scaleX(1.08) scaleY(0.95) rotate(1.5deg); }
+          50% { transform: translateX(-50%) scaleX(0.93) scaleY(1.07) rotate(-2deg); }
+          75% { transform: translateX(-50%) scaleX(1.05) scaleY(0.97) rotate(1deg); }
+        }
+        @keyframes flameMid {
+          0%, 100% { transform: translateX(-50%) scaleX(1) scaleY(1) rotate(1deg); }
+          30% { transform: translateX(-50%) scaleX(0.9) scaleY(1.1) rotate(-2deg); }
+          60% { transform: translateX(-50%) scaleX(1.1) scaleY(0.92) rotate(2deg); }
+        }
+        @keyframes flameInner {
+          0%, 100% { transform: translateX(-50%) scaleX(1) scaleY(1); opacity: 0.9; }
+          40% { transform: translateX(-50%) scaleX(0.85) scaleY(1.12) rotate(-1deg); opacity: 1; }
+          70% { transform: translateX(-50%) scaleX(1.1) scaleY(0.9) rotate(1deg); opacity: 0.85; }
+        }
+        @keyframes flameCore {
+          0%, 100% { transform: translateX(-50%) scaleY(1); opacity: 1; }
+          50% { transform: translateX(-50%) scaleY(1.15); opacity: 0.8; }
+        }
+        @keyframes glowPulse {
+          0%, 100% { opacity: 0.7; transform: translateX(-50%) scaleX(1); }
+          50% { opacity: 1; transform: translateX(-50%) scaleX(1.15); }
+        }
+        @keyframes starTwinkle {
+          0%, 100% { opacity: 0.2; }
+          50% { opacity: 0.9; }
+        }
       `}</style>
     </main>
   )
