@@ -1,4 +1,3 @@
-import { Shader, ChromaFlow, Swirl } from "shaders/react"
 import { CustomCursor } from "@/components/custom-cursor"
 import { GrainOverlay } from "@/components/grain-overlay"
 import { WorkSection } from "@/components/sections/work-section"
@@ -14,37 +13,11 @@ export default function Index() {
   const [isLoaded, setIsLoaded] = useState(false)
   const touchStartY = useRef(0)
   const touchStartX = useRef(0)
-  const shaderContainerRef = useRef<HTMLDivElement>(null)
   const scrollThrottleRef = useRef<number>()
 
   useEffect(() => {
-    const checkShaderReady = () => {
-      if (shaderContainerRef.current) {
-        const canvas = shaderContainerRef.current.querySelector("canvas")
-        if (canvas && canvas.width > 0 && canvas.height > 0) {
-          setIsLoaded(true)
-          return true
-        }
-      }
-      return false
-    }
-
-    if (checkShaderReady()) return
-
-    const intervalId = setInterval(() => {
-      if (checkShaderReady()) {
-        clearInterval(intervalId)
-      }
-    }, 100)
-
-    const fallbackTimer = setTimeout(() => {
-      setIsLoaded(true)
-    }, 1500)
-
-    return () => {
-      clearInterval(intervalId)
-      clearTimeout(fallbackTimer)
-    }
+    const timer = setTimeout(() => setIsLoaded(true), 800)
+    return () => clearTimeout(timer)
   }, [])
 
   const scrollToSection = (index: number) => {
@@ -175,39 +148,26 @@ export default function Index() {
       <CustomCursor />
       <GrainOverlay />
 
-      <div
-        ref={shaderContainerRef}
-        className={`fixed inset-0 z-0 transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}
-        style={{ contain: "strict" }}
-      >
-        <Shader className="h-full w-full">
-          <Swirl
-            colorA="#8B0000"
-            colorB="#1a1a2e"
-            speed={0.4}
-            detail={0.6}
-            blend={60}
-            coarseX={50}
-            coarseY={50}
-            mediumX={30}
-            mediumY={30}
-            fineX={20}
-            fineY={20}
-          />
-          <ChromaFlow
-            baseColor="#1a1a2e"
-            upColor="#8B0000"
-            downColor="#0a0a1a"
-            leftColor="#c0a060"
-            rightColor="#8B0000"
-            intensity={0.85}
-            radius={1.6}
-            momentum={20}
-            maskType="alpha"
-            opacity={0.97}
-          />
-        </Shader>
-        <div className="absolute inset-0 bg-black/20" />
+      {/* Video background */}
+      <div className={`fixed inset-0 z-0 transition-opacity duration-1000 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
+        <iframe
+          src="https://www.youtube.com/embed/4MK89zVlYdQ?autoplay=1&mute=1&loop=1&playlist=4MK89zVlYdQ&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=0&disablekb=1&fs=0&iv_load_policy=3"
+          allow="autoplay; encrypted-media"
+          className="pointer-events-none absolute"
+          style={{
+            top: "50%",
+            left: "50%",
+            width: "177.78vh",
+            minWidth: "100%",
+            height: "56.25vw",
+            minHeight: "100%",
+            transform: "translate(-50%, -50%)",
+            border: "none",
+          }}
+          title="background"
+        />
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
       </div>
 
       <nav
