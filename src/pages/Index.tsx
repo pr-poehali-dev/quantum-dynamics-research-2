@@ -151,7 +151,7 @@ export default function Index() {
       {/* Video background */}
       <div className={`fixed inset-0 z-0 transition-opacity duration-1000 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
         <iframe
-          src="https://www.youtube.com/embed/videoseries?list=PLbpi6ZahtOH6Ar_3GPy3workQbMKNkEge&autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&fs=0&iv_load_policy=3"
+          src="https://www.youtube.com/embed/LMlUlFNW3nk?autoplay=1&mute=1&loop=1&playlist=LMlUlFNW3nk&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&fs=0&iv_load_policy=3"
           allow="autoplay; encrypted-media"
           className="pointer-events-none absolute"
           style={{
